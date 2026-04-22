@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 02-create-operations-table
+      author: sergeevoa
+      changes:
+        - createTable:
+            tableName: operations
+            columns:
+              - column:
+                  name: operation_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: payment_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_operations_payment_id
+                    references: payments(payment_id)
+                    unique: true
+                    uniqueConstraintName: uq_operations_payment_id
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: auth_code
+                  type: varchar(20)
+              - column:
+                  name: auth_date
+                  type: timestamptz
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false

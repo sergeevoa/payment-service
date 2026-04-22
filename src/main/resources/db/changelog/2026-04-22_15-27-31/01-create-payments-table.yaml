@@ -1,0 +1,92 @@
+databaseChangeLog:
+  - changeSet:
+      id: 01-create-payments-table
+      author: sergeevoa
+      changes:
+        - createTable:
+            tableName: payments
+            columns:
+              - column:
+                  name: payment_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: terminal_id
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: customer_id
+                  type: varchar(36)
+              - column:
+                  name: amount
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(140)
+              - column:
+                  name: is_recurrent
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rebill_id
+                  type: uuid
+              - column:
+                  name: card_id
+                  type: uuid
+              - column:
+                  name: language
+                  type: varchar(2)
+                  defaultValue: 'en'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_url
+                  type: text
+              - column:
+                  name: notification_url
+                  type: text
+              - column:
+                  name: success_url
+                  type: text
+              - column:
+                  name: fail_url
+                  type: text
+              - column:
+                  name: redirect_due_date
+                  type: timestamptz
+              - column:
+                  name: send_email
+                  type: boolean
+              - column:
+                  name: info_email
+                  type: varchar(255)
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+        - sql:
+            sql: "ALTER TABLE payments ADD CONSTRAINT chk_payments_language CHECK (language IN ('ru', 'en'));"
