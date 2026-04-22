@@ -2,6 +2,9 @@ spring:
   application:
     name: payment-service
   
+  # profiles:
+  #  active: local
+
   datasource:
     url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/payment_db}
     username: ${DATASOURCE_USERNAME:postgres}
@@ -19,7 +22,7 @@ spring:
   
   liquibase:
     enabled: true
-    change-log: classpath:db/changelog/db.changelog-master.yaml
+    change-log: classpath:db/changelog/liquibase-master.yaml
   
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
